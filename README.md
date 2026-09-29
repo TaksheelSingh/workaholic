@@ -77,8 +77,8 @@ A minimalist, high-productivity office attendance and leave tracking web dashboa
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/TaksheelSingh/workaholic-attendance-tracker.git
-   cd workaholic-attendance-tracker
+   git clone https://github.com/TaksheelSingh/workaholic.git
+   cd workaholic
    ```
 
 2. Install dependencies:
@@ -122,7 +122,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 1. Push your repository to GitHub.
 2. Log in to [Render](https://render.com) and create a **New Web Service**.
-3. Connect your GitHub repository `workaholic-attendance-tracker`.
+3. Connect your GitHub repository `workaholic`.
 4. Configure service settings:
    * **Build Command**: `npm install && npm run build`
    * **Start Command**: `npm start`

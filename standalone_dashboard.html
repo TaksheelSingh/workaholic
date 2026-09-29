@@ -47,6 +47,7 @@
       OD: { key: 'OD', name: 'On Duty', hex: '#EF4444' }
     };
     const LEAVE_KEYS = Object.keys(LEAVE_TYPES);
+    const DROPDOWN_KEYS = LEAVE_KEYS.filter(k => k !== 'OFFICE');
     const getHex = (k) => LEAVE_TYPES[k] ? LEAVE_TYPES[k].hex : '#E5E7EB';
 
     const INITIAL_LEAVES = {};
@@ -169,24 +170,20 @@
                       const dStr = `${year}-${String(monthIdx+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                       const entry = leaves[dStr];
                       let style = { background: isDark ? '#1F2937' : '#F8FAFC', color: isDark ? '#D1D5DB' : '#334155' };
-                      let label = '';
 
                       if (entry) {
                         if (entry.type === 'full') {
                           style = { background: getHex(entry.category), color: '#fff' };
-                          label = entry.category;
                         } else if (entry.type === 'half') {
                           const h1 = entry.half1 ? getHex(entry.half1) : '#F1F5F9';
                           const h2 = entry.half2 ? getHex(entry.half2) : '#F1F5F9';
                           style = { background: `linear-gradient(90deg, ${h1} 50%, ${h2} 50%)`, color: '#fff' };
-                          label = `${entry.half1||'WRK'}/${entry.half2||'WRK'}`;
                         }
                       }
 
                       return (
-                        <div key={dStr} style={style} onClick={() => handleDateClick(dStr, entry)} className="w-12 h-12 rounded-full flex flex-col items-center justify-center font-bold text-xs shadow-sm transition hover:scale-105 cursor-pointer">
+                        <div key={dStr} style={style} onClick={() => handleDateClick(dStr, entry)} className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition hover:scale-105 cursor-pointer">
                           <span>{d}</span>
-                          {label && <span className="text-[8px] font-black opacity-90 leading-none">{label}</span>}
                         </div>
                       );
                     })}
@@ -246,7 +243,7 @@
 
       React.useEffect(() => {
         if (existing) {
-          if (existing.type === 'full') { setMode('full'); setCat(existing.category || 'PL'); }
+          if (existing.type === 'full') { setMode('full'); setCat(existing.category === 'OFFICE' ? 'PL' : existing.category || 'PL'); }
           else { setMode(existing.half2 ? 'half2' : 'half1'); setCat(existing.half2 || existing.half1 || 'SL'); }
         }
       }, [existing]);
@@ -261,7 +258,7 @@
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-gray-100">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
-              <h3 className="font-bold text-lg text-gray-900 dark:text-white">Configure Attendance</h3>
+              <h3 className="font-bold text-lg text-gray-900 dark:text-white">Configure Leave</h3>
               <button onClick={onClose} className="text-gray-400 font-bold hover:text-gray-600 dark:hover:text-gray-200">✕</button>
             </div>
 
@@ -280,7 +277,7 @@
               <div>
                 <label className="text-xs font-bold text-gray-400 dark:text-gray-500 block mb-2 uppercase">2. Select Leave Category</label>
                 <select value={cat} onChange={e => setCat(e.target.value)} className="w-full p-3 text-xs rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold">
-                  {LEAVE_KEYS.map(k => <option key={k} value={k}>{LEAVE_TYPES[k].name} ({k})</option>)}
+                  {DROPDOWN_KEYS.map(k => <option key={k} value={k}>{LEAVE_TYPES[k].name} ({k})</option>)}
                 </select>
               </div>
             </div>

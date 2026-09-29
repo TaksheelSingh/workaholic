@@ -16,11 +16,14 @@ export const LeaveModal = ({
   const [allocationMode, setAllocationMode] = useState('full'); // 'full', 'half1', 'half2'
   const [selectedCategory, setSelectedCategory] = useState('PL');
 
+  // Filter out OFFICE from dropdown list as In Office is single press trigger
+  const dropdownCategories = LEAVE_TYPE_KEYS.filter((k) => k !== 'OFFICE');
+
   useEffect(() => {
     if (existingEntry) {
       if (existingEntry.type === 'full') {
         setAllocationMode('full');
-        setSelectedCategory(existingEntry.category || 'PL');
+        setSelectedCategory(existingEntry.category === 'OFFICE' ? 'PL' : existingEntry.category || 'PL');
       } else if (existingEntry.type === 'half') {
         if (existingEntry.half2) {
           setAllocationMode('half2');
@@ -91,7 +94,7 @@ export const LeaveModal = ({
             </div>
             <div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                Configure Attendance
+                Configure Leave
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 {formatNiceDate(dateStr)}
@@ -140,7 +143,7 @@ export const LeaveModal = ({
             </div>
           </div>
 
-          {/* 2. Leave Category Selector (Clean Dropdown Menu) */}
+          {/* 2. Leave Category Selector (Dropdown filtered to exclude OFFICE) */}
           <div>
             <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
               2. Select Leave Category
@@ -150,7 +153,7 @@ export const LeaveModal = ({
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full px-4 py-3 text-xs font-semibold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
             >
-              {LEAVE_TYPE_KEYS.map((key) => {
+              {dropdownCategories.map((key) => {
                 const item = LEAVE_TYPES[key];
                 return (
                   <option key={key} value={key}>

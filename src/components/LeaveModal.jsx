@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LEAVE_TYPES, LEAVE_TYPE_KEYS } from '../constants/leaveTypes';
 import { formatNiceDate } from '../utils/calendarUtils';
-import { X, Check, Trash2, Calendar as CalendarIcon } from 'lucide-react';
+import { X, Check, Trash2, Calendar as CalendarIcon, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export const LeaveModal = ({
@@ -148,20 +148,25 @@ export const LeaveModal = ({
             <label className="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
               2. Select Leave Category
             </label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-3 text-xs font-semibold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
-            >
-              {dropdownCategories.map((key) => {
-                const item = LEAVE_TYPES[key];
-                return (
-                  <option key={key} value={key}>
-                    {item.name} ({key})
-                  </option>
-                );
-              })}
-            </select>
+            <div className="relative">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full appearance-none pl-4 pr-10 py-3 text-xs font-semibold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-sm"
+              >
+                {dropdownCategories.map((key) => {
+                  const item = LEAVE_TYPES[key];
+                  return (
+                    <option key={key} value={key} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+                      {item.name} ({key})
+                    </option>
+                  );
+                })}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400">
+                <ChevronDown className="w-4 h-4" />
+              </div>
+            </div>
           </div>
 
         </div>

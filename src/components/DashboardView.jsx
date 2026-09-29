@@ -13,13 +13,13 @@ export const DashboardView = ({
   onDateClick
 }) => {
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto animate-fadeIn min-h-full flex flex-col justify-between">
+    <div className="p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto animate-fadeIn min-h-full flex flex-col justify-between">
       
-      {/* Dashboard Layout: Interactive Calendar + KPI Metrics Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Responsive Dashboard Grid: Desktop 2-column, Mobile single column stack */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6 items-start">
         
-        {/* 1. Interactive Calendar Card (6 Columns) */}
-        <div className="lg:col-span-6">
+        {/* 1. Interactive Calendar Card (6 Columns Desktop, 100% Mobile) */}
+        <div className="xl:col-span-6 w-full">
           <CalendarCard
             year={year}
             monthIndex={monthIndex}
@@ -31,11 +31,11 @@ export const DashboardView = ({
           />
         </div>
 
-        {/* 2. KPI Metrics Grid for 7 Categories (6 Columns) */}
-        <div className="lg:col-span-6">
+        {/* 2. KPI Metrics Grid for Categories (6 Columns Desktop, 100% Mobile) */}
+        <div className="xl:col-span-6 w-full">
           <div className="space-y-3">
             <span className="text-[10px] font-black text-gray-400 dark:text-gray-400 uppercase tracking-widest block px-1">
-              ACCUMULATED LEAVE METRICS (7 CATEGORIES)
+              ACCUMULATED ATTENDANCE & LEAVE METRICS
             </span>
             <KpiMetricsGrid metrics={metrics} isDark={isDark} />
           </div>
@@ -43,8 +43,8 @@ export const DashboardView = ({
 
       </div>
 
-      {/* Footer with Divider Line separating footer from cards */}
-      <footer className="pt-8 mt-12 border-t border-gray-200 dark:border-gray-800/80 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
+      {/* Footer with Divider Line */}
+      <footer className="pt-6 md:pt-8 mt-8 md:mt-12 border-t border-gray-200 dark:border-gray-800/80 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
         <p>© 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.</p>
         <p className="text-[11px] text-gray-400/80 dark:text-gray-500/80">Made by Taksheel Rawat · Attendance & Leave Tracker</p>
       </footer>

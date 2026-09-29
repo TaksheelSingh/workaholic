@@ -71,13 +71,27 @@ export function App() {
     }
   };
 
-  // Date Click -> Open Modal
+  /**
+   * Date Circle Click Interaction Logic:
+   * 1st Click on a blank/un-logged date -> Direct quick trigger for "In Office Work" (OFFICE - Light Green)
+   * 2nd Click on an already set date -> Opens Leave Modal popup to configure/update leaves or reset
+   */
   const handleDateClick = (dateStr, entry) => {
-    setModalState({
-      isOpen: true,
-      dateStr,
-      entry: entry || null
-    });
+    if (!entry) {
+      // Direct trigger for In Office Work (Light Green)
+      const officeEntry = {
+        type: 'full',
+        category: 'OFFICE'
+      };
+      handleSaveLeave(dateStr, officeEntry);
+    } else {
+      // 2nd click: Open Leave Modal popup to edit / configure
+      setModalState({
+        isOpen: true,
+        dateStr,
+        entry: entry
+      });
+    }
   };
 
   const handleCloseModal = () => {
@@ -109,9 +123,9 @@ export function App() {
   const metrics = computeKpiMetrics(leaves, activeMonthKey);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+    <div className="flex flex-col md:flex-row min-h-screen w-screen overflow-x-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
       
-      {/* 1. Left Sidebar */}
+      {/* 1. Left Sidebar (Fixed 240px Desktop, Sticky Header Mobile) */}
       <Sidebar
         isDark={isDark}
         onToggleTheme={() => setIsDark(!isDark)}

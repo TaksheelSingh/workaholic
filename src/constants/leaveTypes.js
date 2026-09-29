@@ -1,11 +1,43 @@
 export const LEAVE_TYPES = {
+  OFFICE: {
+    key: 'OFFICE',
+    name: 'In Office Work',
+    accentColor: 'Light Green',
+    lightHex: '#34D399',
+    darkHex: '#10B981',
+    description: 'On-site office attendance day'
+  },
+  WFH: {
+    key: 'WFH',
+    name: 'Work From Home',
+    accentColor: 'Dark Green',
+    lightHex: '#047857',
+    darkHex: '#065F46',
+    description: 'Remote work allocation day'
+  },
+  PL: {
+    key: 'PL',
+    name: 'Privilege Leave',
+    accentColor: 'Dark Blue',
+    lightHex: '#1D4ED8',
+    darkHex: '#3B82F6',
+    description: 'Earned annual paid time off'
+  },
+  SL: {
+    key: 'SL',
+    name: 'Sick / Casual Leave',
+    accentColor: 'Light Blue',
+    lightHex: '#0EA5E9',
+    darkHex: '#38BDF8',
+    description: 'Unplanned health or urgent personal affairs'
+  },
   PH: {
     key: 'PH',
     name: 'Public Holiday',
     accentColor: 'Orange',
     lightHex: '#F97316',
     darkHex: '#FB923C',
-    description: 'Official state or office declared holiday'
+    description: 'Official corporate & state holiday'
   },
   OPH: {
     key: 'OPH',
@@ -30,30 +62,6 @@ export const LEAVE_TYPES = {
     lightHex: '#EF4444',
     darkHex: '#F87171',
     description: 'External client site or official work'
-  },
-  PL: {
-    key: 'PL',
-    name: 'Privilege Leave',
-    accentColor: 'Dark Blue',
-    lightHex: '#1D4ED8',
-    darkHex: '#3B82F6',
-    description: 'Earned annual paid time off'
-  },
-  SL: {
-    key: 'SL',
-    name: 'Sick / Casual Leave',
-    accentColor: 'Light Blue',
-    lightHex: '#0EA5E9',
-    darkHex: '#38BDF8',
-    description: 'Unplanned health or urgent personal affairs'
-  },
-  WFH: {
-    key: 'WFH',
-    name: 'Work From Home',
-    accentColor: 'Green',
-    lightHex: '#10B981',
-    darkHex: '#34D399',
-    description: 'Remote work allocation day'
   }
 };
 

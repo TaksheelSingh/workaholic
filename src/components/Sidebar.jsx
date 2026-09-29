@@ -7,15 +7,15 @@ export const Sidebar = ({
   user
 }) => {
   return (
-    <aside className="w-64 flex-shrink-0 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col justify-between p-6 transition-colors duration-200">
+    <aside className="w-full md:w-[240px] md:h-screen flex-shrink-0 bg-white dark:bg-gray-900 border-b md:border-b-0 md:border-r border-gray-100 dark:border-gray-800 flex flex-row md:flex-col justify-between p-4 md:px-[18px] md:py-[24px] transition-colors duration-200 sticky top-0 z-40 md:static">
       
       {/* Top Section */}
-      <div className="space-y-8">
+      <div className="flex flex-row md:flex-col items-center md:items-stretch justify-between w-full md:w-auto space-y-0 md:space-y-8">
         
         {/* Logo & Quick Switch Dark/Light Mode */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-auto md:w-full space-x-3 md:space-x-0">
           <div className="flex items-center space-x-2">
-            <span className="text-2xl font-black tracking-tight text-gray-900 dark:text-white font-sans">
+            <span className="text-xl md:text-2xl font-black tracking-tight text-gray-900 dark:text-white font-sans">
               workaholic<span className="text-indigo-600 dark:text-indigo-400">.</span>
             </span>
           </div>
@@ -31,7 +31,7 @@ export const Sidebar = ({
         </div>
 
         {/* Navigation List - Dashboard button with hover effect */}
-        <div>
+        <div className="hidden md:block">
           <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-4 px-3">
             MAIN
           </span>
@@ -48,9 +48,9 @@ export const Sidebar = ({
       </div>
 
       {/* Bottom Profile Badge with hover effect */}
-      <div className="p-3 rounded-full bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-md transition-all duration-200 cursor-pointer">
-        <div className="flex items-center space-x-3 min-w-0">
-          <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
+      <div className="p-2.5 md:p-3 rounded-full bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-md transition-all duration-200 cursor-pointer">
+        <div className="flex items-center space-x-2.5 md:space-x-3 min-w-0">
+          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
             {user?.initials || 'TR'}
           </div>
           <div className="min-w-0 flex-1">

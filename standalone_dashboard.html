@@ -37,13 +37,14 @@
 
   <script type="text/babel">
     const LEAVE_TYPES = {
+      OFFICE: { key: 'OFFICE', name: 'In Office Work', hex: '#34D399' },
+      WFH: { key: 'WFH', name: 'Work From Home', hex: '#047857' },
+      PL: { key: 'PL', name: 'Privilege Leave', hex: '#1D4ED8' },
+      SL: { key: 'SL', name: 'Sick / Casual Leave', hex: '#0EA5E9' },
       PH: { key: 'PH', name: 'Public Holiday', hex: '#F97316' },
       OPH: { key: 'OPH', name: 'Optional Public Holiday', hex: '#EAB308' },
       MD: { key: 'MD', name: 'My Day', hex: '#A855F7' },
-      OD: { key: 'OD', name: 'On Duty', hex: '#EF4444' },
-      PL: { key: 'PL', name: 'Privilege Leave', hex: '#1D4ED8' },
-      SL: { key: 'SL', name: 'Sick / Casual Leave', hex: '#0EA5E9' },
-      WFH: { key: 'WFH', name: 'Work From Home', hex: '#10B981' }
+      OD: { key: 'OD', name: 'On Duty', hex: '#EF4444' }
     };
     const LEAVE_KEYS = Object.keys(LEAVE_TYPES);
     const getHex = (k) => LEAVE_TYPES[k] ? LEAVE_TYPES[k].hex : '#E5E7EB';
@@ -85,6 +86,16 @@
       for(let i=0; i<firstDay; i++) calDays.push(null);
       for(let d=1; d<=daysInMonth; d++) calDays.push(d);
 
+      const handleDateClick = (dStr, entry) => {
+        if (!entry) {
+          // 1st click: Direct trigger for In Office Work (Light Green)
+          setLeaves(prev => ({ ...prev, [dStr]: { type: 'full', category: 'OFFICE' } }));
+        } else {
+          // 2nd click: Open Leave Modal popup
+          setModal({ open: true, dateStr: dStr, entry: entry });
+        }
+      };
+
       const handleSave = (dateStr, entryData) => {
         setLeaves(prev => ({ ...prev, [dateStr]: entryData }));
         try { confetti({ particleCount: 35, spread: 60, origin: { y: 0.7 } }); } catch(e){}
@@ -97,18 +108,18 @@
       };
 
       return (
-        <div className="flex h-full w-full overflow-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+        <div className="flex flex-col md:flex-row h-full w-full overflow-x-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
           {/* Sidebar */}
-          <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 p-6 flex flex-col justify-between">
-            <div className="space-y-8">
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-black text-gray-900 dark:text-white">workaholic<span className="text-indigo-600">.</span></span>
+          <aside className="w-full md:w-[240px] bg-white dark:bg-gray-900 border-b md:border-b-0 md:border-r border-gray-100 dark:border-gray-800 p-4 md:px-[18px] md:py-[24px] flex flex-row md:flex-col justify-between flex-shrink-0">
+            <div className="flex flex-row md:flex-col items-center md:items-stretch justify-between w-full md:w-auto space-y-0 md:space-y-8">
+              <div className="flex items-center justify-between w-auto md:w-full space-x-3 md:space-x-0">
+                <span className="text-xl md:text-2xl font-black text-gray-900 dark:text-white">workaholic<span className="text-indigo-600">.</span></span>
                 <button onClick={toggleTheme} className="p-1.5 rounded-full text-amber-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
                   {isDark ? '☀️' : '🌙'}
                 </button>
               </div>
 
-              <div>
+              <div className="hidden md:block">
                 <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-4 px-3">MAIN</span>
                 <nav className="space-y-2">
                   <button className="w-full text-left px-4 py-2.5 rounded-full text-xs font-bold border border-indigo-500/30 bg-indigo-50/70 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 shadow-sm hover:bg-indigo-100 dark:hover:bg-indigo-900/60 hover:shadow-md transition cursor-pointer">
@@ -119,8 +130,8 @@
             </div>
 
             {/* Profile badge with hover */}
-            <div className="p-3 rounded-full bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-800 flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-800/90 hover:shadow-md transition cursor-pointer">
-              <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 font-bold flex items-center justify-center text-xs">TR</div>
+            <div className="p-2.5 md:p-3 rounded-full bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-800 flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-800/90 hover:shadow-md transition cursor-pointer">
+              <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 font-bold flex items-center justify-center text-xs">TR</div>
               <div>
                 <div className="text-xs font-bold text-gray-900 dark:text-white">Taksheel Rawat</div>
                 <div className="text-[10px] text-gray-400 dark:text-gray-500">Local User</div>
@@ -130,18 +141,18 @@
 
           {/* Main Workspace */}
           <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-gray-50 dark:bg-gray-950">
-            <header className="px-8 py-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+            <header className="px-6 md:px-8 py-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
               <div>
-                <h1 className="text-3xl font-black text-gray-900 dark:text-white">Dashboard</h1>
+                <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white">Dashboard</h1>
                 <p className="text-xs font-medium text-gray-400 dark:text-gray-400 mt-1">Real-time leave balances, half-day allocations, and monthly attendance tracking.</p>
               </div>
             </header>
 
-            <main className="flex-1 overflow-y-auto p-8 space-y-8 bg-gray-50 dark:bg-gray-950 flex flex-col justify-between">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <main className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 md:space-y-8 bg-gray-50 dark:bg-gray-950 flex flex-col justify-between">
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
                 
-                {/* Central Calendar (6 Cols) */}
-                <div className="lg:col-span-6 bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-6">
+                {/* Central Calendar (6 Cols Desktop) */}
+                <div className="xl:col-span-6 bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-6">
                   <div className="flex items-center justify-between px-4 pb-2">
                     <button onClick={() => setMonthIdx(m => m === 0 ? 11 : m - 1)} className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center font-bold hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">‹</button>
                     <h2 className="text-xl font-black text-gray-900 dark:text-white">{MONTHS[monthIdx]} {year}</h2>
@@ -173,7 +184,7 @@
                       }
 
                       return (
-                        <div key={dStr} style={style} onClick={() => setModal({ open: true, dateStr: dStr, entry: entry || null })} className="w-12 h-12 rounded-full flex flex-col items-center justify-center font-bold text-xs shadow-sm transition hover:scale-105 cursor-pointer">
+                        <div key={dStr} style={style} onClick={() => handleDateClick(dStr, entry)} className="w-12 h-12 rounded-full flex flex-col items-center justify-center font-bold text-xs shadow-sm transition hover:scale-105 cursor-pointer">
                           <span>{d}</span>
                           {label && <span className="text-[8px] font-black opacity-90 leading-none">{label}</span>}
                         </div>
@@ -182,9 +193,9 @@
                   </div>
                 </div>
 
-                {/* KPI Grid (6 Cols - 7 Categories) */}
-                <div className="lg:col-span-6 space-y-3">
-                  <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest block px-1">ACCUMULATED LEAVE METRICS (7 CATEGORIES)</span>
+                {/* KPI Grid (6 Cols Desktop) */}
+                <div className="xl:col-span-6 space-y-3">
+                  <span className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest block px-1">ACCUMULATED ATTENDANCE & LEAVE METRICS</span>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {LEAVE_KEYS.map(k => {
                       const data = metrics[k];
@@ -208,7 +219,7 @@
               </div>
 
               {/* Footer with Divider Line */}
-              <footer className="pt-8 mt-12 border-t border-gray-200 dark:border-gray-800 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
+              <footer className="pt-6 md:pt-8 mt-8 md:mt-12 border-t border-gray-200 dark:border-gray-800 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
                 <p>© 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.</p>
                 <p className="text-[11px]">Made by Taksheel Rawat · Attendance & Leave Tracker</p>
               </footer>

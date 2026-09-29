@@ -46,7 +46,7 @@ export const DateCircle = ({
       onClick={onClick}
       style={style}
       className={`
-        w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer select-none font-bold text-sm
+        w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer select-none font-bold text-xs sm:text-sm
         ${!isCurrentMonth ? 'opacity-30' : ''}
         ${isSelected ? 'ring-4 ring-indigo-500 ring-offset-2 dark:ring-offset-gray-900 scale-105' : ''}
         ${isToday && !entry ? 'ring-2 ring-indigo-600 border-2 border-indigo-500' : ''}

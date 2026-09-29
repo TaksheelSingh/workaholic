@@ -89,10 +89,8 @@
 
       const handleDateClick = (dStr, entry) => {
         if (!entry) {
-          // 1st click: Direct trigger for In Office Work (Light Green)
           setLeaves(prev => ({ ...prev, [dStr]: { type: 'full', category: 'OFFICE' } }));
         } else {
-          // 2nd click: Open Leave Modal popup
           setModal({ open: true, dateStr: dStr, entry: entry });
         }
       };
@@ -130,7 +128,7 @@
               </div>
             </div>
 
-            {/* Profile badge with hover */}
+            {/* Profile badge */}
             <div className="p-2.5 md:p-3 rounded-full bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-800 flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-800/90 hover:shadow-md transition cursor-pointer">
               <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 font-bold flex items-center justify-center text-xs">TR</div>
               <div>
@@ -153,20 +151,26 @@
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
                 
                 {/* Central Calendar (6 Cols Desktop) */}
-                <div className="xl:col-span-6 bg-white dark:bg-gray-900 rounded-3xl p-6 md:p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-6">
-                  <div className="flex items-center justify-between px-4 pb-2">
-                    <button onClick={() => setMonthIdx(m => m === 0 ? 11 : m - 1)} className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center font-bold hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">‹</button>
-                    <h2 className="text-xl font-black text-gray-900 dark:text-white">{MONTHS[monthIdx]} {year}</h2>
-                    <button onClick={() => setMonthIdx(m => m === 11 ? 0 : m + 1)} className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center font-bold hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">›</button>
+                <div className="xl:col-span-6 bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 dark:border-gray-800 shadow-sm space-y-6">
+                  {/* Middle Aligned Month & Year Header */}
+                  <div className="flex items-center justify-between px-2 sm:px-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+                    <button onClick={() => setMonthIdx(m => m === 0 ? 11 : m - 1)} className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center font-bold hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer flex-shrink-0">‹</button>
+                    
+                    <div className="flex flex-col items-center justify-center text-center mx-auto">
+                      <h2 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white leading-none">{MONTHS[monthIdx]}</h2>
+                      <span className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 tracking-widest mt-1">{year}</span>
+                    </div>
+
+                    <button onClick={() => setMonthIdx(m => m === 11 ? 0 : m + 1)} className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center font-bold hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer flex-shrink-0">›</button>
                   </div>
 
-                  <div className="grid grid-cols-7 gap-3 text-center text-[11px] font-black text-gray-400 dark:text-gray-500">
+                  <div className="grid grid-cols-7 gap-1 sm:gap-2 md:gap-3 text-center text-[10px] sm:text-[11px] font-black text-gray-400 dark:text-gray-500">
                     {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(w => <div key={w}>{w}</div>)}
                   </div>
 
-                  <div className="grid grid-cols-7 gap-3 justify-items-center">
+                  <div className="grid grid-cols-7 gap-1.5 sm:gap-2.5 md:gap-3 justify-items-center">
                     {calDays.map((d, idx) => {
-                      if (!d) return <div key={idx} className="w-12 h-12" />;
+                      if (!d) return <div key={idx} className="w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12" />;
                       const dStr = `${year}-${String(monthIdx+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                       const entry = leaves[dStr];
                       let style = { background: isDark ? '#1F2937' : '#F8FAFC', color: isDark ? '#D1D5DB' : '#334155' };
@@ -182,7 +186,7 @@
                       }
 
                       return (
-                        <div key={dStr} style={style} onClick={() => handleDateClick(dStr, entry)} className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition hover:scale-105 cursor-pointer">
+                        <div key={dStr} style={style} onClick={() => handleDateClick(dStr, entry)} className="w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm shadow-sm transition hover:scale-105 cursor-pointer">
                           <span>{d}</span>
                         </div>
                       );

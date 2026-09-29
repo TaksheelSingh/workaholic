@@ -20,31 +20,41 @@ export const fetchTursoLeaves = async () => {
       }
     }
   } catch (e) {
-    // API server not running (e.g. standalone Vite dev without node server) -> use local storage
+    // API server offline -> fallback to localStorage
   }
   return loadLeavesData();
 };
 
 export const saveTursoLeave = async (dateStr, entryData) => {
   try {
-    await fetch(API_BASE, {
+    const res = await fetch(API_BASE, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ dateStr, entryData })
     });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) return true;
+    }
   } catch (e) {
     // ignore offline sync
   }
+  return false;
 };
 
 export const deleteTursoLeave = async (dateStr) => {
   try {
-    await fetch(`${API_BASE}/${dateStr}`, {
+    const res = await fetch(`${API_BASE}/${dateStr}`, {
       method: 'DELETE'
     });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) return true;
+    }
   } catch (e) {
     // ignore offline sync
   }
+  return false;
 };
 
 export const loadLeavesData = () => {

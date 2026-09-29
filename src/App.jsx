@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   loadLeavesData,
   saveLeavesData,
@@ -31,16 +31,27 @@ export function App() {
     entry: null
   });
 
-  // Load live leaves from Turso DB on mount
-  useEffect(() => {
-    async function initTurso() {
-      const fetched = await fetchTursoLeaves();
-      if (fetched) {
-        setLeaves(fetched);
-      }
+  // Sync data from live database server
+  const syncServerData = useCallback(async () => {
+    const fetched = await fetchTursoLeaves();
+    if (fetched && typeof fetched === 'object') {
+      setLeaves(fetched);
     }
-    initTurso();
   }, []);
+
+  // Poll server every 3 seconds and sync on window focus (tab switch / phone app open)
+  useEffect(() => {
+    syncServerData();
+
+    const handleFocus = () => syncServerData();
+    window.addEventListener('focus', handleFocus);
+    const interval = setInterval(syncServerData, 3000);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      clearInterval(interval);
+    };
+  }, [syncServerData]);
 
   // Apply dark mode class to html document element
   useEffect(() => {
@@ -76,14 +87,14 @@ export function App() {
    * 1st Click on a blank/un-logged date -> Direct quick trigger for "In Office Work" (OFFICE - Light Green)
    * 2nd Click on an already set date -> Opens Leave Modal popup to configure/update leaves or reset
    */
-  const handleDateClick = (dateStr, entry) => {
+  const handleDateClick = async (dateStr, entry) => {
     if (!entry) {
       // Direct trigger for In Office Work (Light Green)
       const officeEntry = {
         type: 'full',
         category: 'OFFICE'
       };
-      handleSaveLeave(dateStr, officeEntry);
+      await handleSaveLeave(dateStr, officeEntry);
     } else {
       // 2nd click: Open Leave Modal popup to edit / configure
       setModalState({
@@ -99,23 +110,25 @@ export function App() {
   };
 
   // Save / Update Leave Allocation
-  const handleSaveLeave = (dateStr, entryData) => {
+  const handleSaveLeave = async (dateStr, entryData) => {
     const updated = {
       ...leaves,
       [dateStr]: entryData
     };
     setLeaves(updated);
     saveLeavesData(updated);
-    saveTursoLeave(dateStr, entryData);
+    await saveTursoLeave(dateStr, entryData);
+    syncServerData();
   };
 
   // Reset / Clear Leave Allocation for a single day
-  const handleResetDay = (dateStr) => {
+  const handleResetDay = async (dateStr) => {
     const updated = { ...leaves };
     delete updated[dateStr];
     setLeaves(updated);
     saveLeavesData(updated);
-    deleteTursoLeave(dateStr);
+    await deleteTursoLeave(dateStr);
+    syncServerData();
   };
 
   // Active Month Key string for KPI computation
@@ -125,7 +138,7 @@ export function App() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-screen overflow-x-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
       
-      {/* 1. Left Sidebar (Fixed 240px Desktop, Sticky Header Mobile) */}
+      {/* 1. Left Sidebar */}
       <Sidebar
         isDark={isDark}
         onToggleTheme={() => setIsDark(!isDark)}

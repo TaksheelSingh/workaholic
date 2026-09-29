@@ -169,23 +169,23 @@ export const LeaveModal = ({
         {/* Modal Footer */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/80 dark:bg-gray-800/80">
           <div>
-            {existingEntry && (
+            {existingEntry ? (
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center space-x-1.5 px-3 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl transition cursor-pointer"
+                title="Reset Day"
+                className="p-2.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl transition cursor-pointer flex items-center justify-center"
               >
-                <Trash2 className="w-4 h-4" />
-                <span>Reset Day</span>
+                <Trash2 className="w-5 h-5" />
               </button>
-            )}
+            ) : <div />}
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition cursor-pointer"
             >
               Cancel
             </button>
@@ -193,10 +193,10 @@ export const LeaveModal = ({
             <button
               type="button"
               onClick={handleSave}
-              className="inline-flex items-center space-x-1.5 px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl shadow-md shadow-indigo-500/20 transition cursor-pointer"
+              title={existingEntry ? 'Update' : 'Save'}
+              className="p-2.5 text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl shadow-md shadow-indigo-500/20 transition cursor-pointer flex items-center justify-center"
             >
-              <Check className="w-4 h-4" />
-              <span>{existingEntry ? 'Update' : 'Save'}</span>
+              <Check className="w-5 h-5" />
             </button>
           </div>
         </div>

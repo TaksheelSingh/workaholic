@@ -7,49 +7,45 @@ export const Sidebar = ({
   user
 }) => {
   return (
-    <aside className="w-full md:w-[240px] md:h-screen flex-shrink-0 bg-white dark:bg-black border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/10 flex flex-row md:flex-col justify-between p-4 md:px-[18px] md:py-[24px] transition-colors duration-200 sticky top-0 z-40 md:static">
+    <aside className="sidebar flex flex-col justify-between">
       
-      {/* Top Section */}
-      <div className="flex flex-col w-full">
-        
-        {/* Logo & Quick Switch Dark/Light Mode with Faded Border Line Below */}
-        <div className="flex items-center justify-between w-full mb-8 pb-4 border-b border-gray-100 dark:border-white/10">
-          <div className="flex items-center space-x-1.5">
-            <span className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white font-sans">
+      {/* Top Header: workaholic. Brand Name + Theme Toggle beside it */}
+      <div>
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--border-color)]">
+          <div className="flex items-center gap-1.5">
+            <span className="font-extrabold text-2xl tracking-tight text-[var(--text-primary)]">
               workaholic<span className="text-[#0A84FF]">.</span>
             </span>
           </div>
 
+          {/* Theme Toggle Button right beside workaholic. */}
           <button
-            type="button"
             onClick={onToggleTheme}
-            title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            className="p-2 rounded-xl bg-gray-50 dark:bg-[#161618] border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all shadow-sm cursor-pointer"
+            className="p-2 rounded-xl bg-[var(--bg-card-inner)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all shadow-sm cursor-pointer"
+            title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
           >
             {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
           </button>
         </div>
 
-        {/* Navigation List - Dashboard button with hover effect */}
-        <div className="hidden md:block">
-          <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-3 px-3 font-mono">
-            MAIN
-          </span>
-          <nav className="space-y-2">
-            <button
-              type="button"
-              className="sidebar-nav-pill active flex items-center justify-start border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-[#161618] text-indigo-600 dark:text-[#0A84FF] shadow-sm cursor-pointer font-bold"
-            >
-              <span>Dashboard</span>
-            </button>
-          </nav>
+        {/* Section Label: MAIN */}
+        <div className="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-widest px-3 mb-3 font-mono">
+          MAIN
         </div>
 
+        {/* Sidebar Navigation Item */}
+        <nav className="space-y-2">
+          <button
+            className="sidebar-nav-pill active"
+          >
+            <span>Dashboard</span>
+          </button>
+        </nav>
       </div>
 
-      {/* Bottom Profile Badge with live status dot (Matching GMD Reference Specification) */}
+      {/* BOTTOM LEFT USER BADGE (Matching GMD Reference Specification) */}
       <div 
-        className="bottom-status-badge w-full cursor-pointer flex items-center justify-between shadow-sm p-2.5 rounded-full border border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-[#111113] hover:border-gray-200 dark:hover:border-white/20 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
+        className="bottom-status-badge w-full cursor-pointer flex items-center justify-between shadow-sm"
         title="Workaholic Telemetry Active"
       >
         <div className="flex items-center gap-2.5 min-w-0">
@@ -57,10 +53,10 @@ export const Sidebar = ({
             {user?.initials || 'TR'}
           </div>
           <div className="min-w-0 flex-1">
-            <div className="text-xs font-bold text-gray-900 dark:text-white leading-none truncate">
+            <div className="text-xs font-bold text-[var(--text-primary)] leading-none truncate">
               {user?.name || 'Taksheel Rawat'}
             </div>
-            <div className="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5 truncate">
+            <div className="text-[10px] text-[var(--text-secondary)] mt-0.5 truncate">
               Workaholic User
             </div>
           </div>

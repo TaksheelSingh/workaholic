@@ -199,10 +199,7 @@ aside.sidebar {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Solid Indicator Dot */
-.live-dot-blinking {
-  background-color: #22c55e;
-}
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {

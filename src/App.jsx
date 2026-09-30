@@ -163,7 +163,7 @@ export function App() {
   const metrics = computeKpiMetrics(leaves, activeMonthKey);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen w-screen overflow-x-hidden bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+    <div className="flex flex-col md:flex-row min-h-screen w-screen overflow-x-hidden bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
       
       {/* 1. Left Sidebar */}
       <Sidebar

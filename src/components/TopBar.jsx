@@ -2,7 +2,7 @@ import React from 'react';
 
 export const TopBar = () => {
   return (
-    <header className="px-4 pt-4 pb-2 md:px-8 md:pt-6 md:pb-3 bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
+    <header className="px-4 pt-4 pb-2 md:px-8 md:pt-6 md:pb-3 bg-gray-50 dark:bg-black transition-colors duration-200">
       <div>
         <h1 className="text-2xl md:text-3xl font-black tracking-tight text-gray-900 dark:text-white">
           Dashboard

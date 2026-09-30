@@ -13,7 +13,7 @@ export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {
           <div
             key={key}
             onClick={() => onCategoryClick && onCategoryClick(key)}
-            className="group relative bg-white dark:bg-gray-900 rounded-3xl p-4 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer overflow-hidden space-y-2"
+            className="group relative bg-white dark:bg-[#0a0a0c] rounded-3xl p-4 border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 dark:hover:border-white/20 transition-all duration-200 cursor-pointer overflow-hidden space-y-2"
           >
             {/* Category Indicator Dot & Name */}
             <div className="flex items-center space-x-2">
@@ -32,7 +32,7 @@ export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {
             </div>
 
             {/* Sub-metrics breakdown (Full Days vs Half Days) */}
-            <div className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 flex justify-between pt-1 border-t border-gray-100 dark:border-gray-800">
+            <div className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 flex justify-between pt-1 border-t border-gray-100 dark:border-white/10">
               <span>Full Days: <strong className="text-gray-700 dark:text-gray-300">{data.fullCount}</strong></span>
               <span>Half Days: <strong className="text-gray-700 dark:text-gray-300">{data.halfCount}</strong></span>
             </div>

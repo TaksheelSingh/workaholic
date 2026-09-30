@@ -43,9 +43,9 @@ export const DashboardView = ({
 
       </div>
 
-      {/* Footer with Divider Line */}
-      <footer className="pt-6 md:pt-8 mt-8 md:mt-12 border-t border-gray-200 dark:border-gray-800/80 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
-        <p>© 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.</p>
+      {/* Footer with Dashed Top Border Line */}
+      <footer className="pt-6 md:pt-8 mt-auto border-t border-dashed border-gray-200 dark:border-white/10 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
+        <p className="font-semibold text-gray-700 dark:text-gray-300">© 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.</p>
         <p className="text-[11px] text-gray-400/80 dark:text-gray-500/80">Made by Taksheel Rawat · Attendance & Leave Tracker</p>
       </footer>
 

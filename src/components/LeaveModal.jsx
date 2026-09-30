@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { LEAVE_TYPES, LEAVE_TYPE_KEYS } from '../constants/leaveTypes';
 import { formatNiceDate } from '../utils/calendarUtils';
 import { X, Check, Trash2, Calendar as CalendarIcon, ChevronDown } from 'lucide-react';

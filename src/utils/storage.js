@@ -87,14 +87,6 @@ export const loadUserProfile = () => {
   }
 };
 
-export const saveUserProfile = (user) => {
-  try {
-    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
-  } catch (err) {
-    console.error('Error saving user profile:', err);
-  }
-};
-
 export const loadTheme = () => {
   try {
     return localStorage.getItem(STORAGE_KEYS.THEME) || 'light';

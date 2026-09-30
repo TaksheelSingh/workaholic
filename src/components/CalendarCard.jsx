@@ -1,4 +1,3 @@
-import React from 'react';
 import { MONTH_NAMES, WEEKDAYS, getMonthDetails, formatDateKey } from '../utils/calendarUtils';
 import { DateCircle } from './DateCircle';
 import { ChevronLeft, ChevronRight } from 'lucide-react';

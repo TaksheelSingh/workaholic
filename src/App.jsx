@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   loadLeavesData,
   saveLeavesData,
@@ -11,7 +11,6 @@ import {
   deleteTursoLeave
 } from './utils/storage';
 import { Sidebar } from './components/Sidebar';
-import { TopBar } from './components/TopBar';
 import { DashboardView } from './components/DashboardView';
 import { LeaveModal } from './components/LeaveModal';
 

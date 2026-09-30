@@ -1,4 +1,3 @@
-import React from 'react';
 import { LEAVE_TYPES, LEAVE_TYPE_KEYS, getLeaveHex } from '../constants/leaveTypes';
 
 export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {

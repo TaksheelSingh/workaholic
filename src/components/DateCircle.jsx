@@ -1,4 +1,3 @@
-import React from 'react';
 import { getLeaveHex } from '../constants/leaveTypes';
 
 export const DateCircle = ({

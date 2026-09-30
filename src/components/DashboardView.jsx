@@ -1,4 +1,3 @@
-import React from 'react';
 import { CalendarCard } from './CalendarCard';
 import { KpiMetricsGrid } from './KpiMetricsGrid';
 

@@ -11,11 +11,6 @@ export const formatDateKey = (year, monthIndex, day) => {
   return `${year}-${m}-${d}`;
 };
 
-export const parseDateKey = (dateStr) => {
-  const [year, month, day] = dateStr.split('-').map(Number);
-  return { year, monthIndex: month - 1, day };
-};
-
 export const getMonthDetails = (year, monthIndex) => {
   const firstDay = new Date(year, monthIndex, 1);
   const startingDayOfWeek = firstDay.getDay(); // 0 = Sun, 1 = Mon ...

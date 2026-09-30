@@ -35,17 +35,23 @@ export function App() {
   const syncServerData = useCallback(async () => {
     const fetched = await fetchTursoLeaves();
     if (fetched && typeof fetched === 'object') {
-      setLeaves(fetched);
+      setLeaves((prev) => {
+        // Only update if server data differs from current state
+        if (JSON.stringify(prev) !== JSON.stringify(fetched)) {
+          return fetched;
+        }
+        return prev;
+      });
     }
   }, []);
 
-  // Poll server every 3 seconds and sync on window focus (tab switch / phone app open)
+  // Poll server every 5 seconds and sync on window focus
   useEffect(() => {
     syncServerData();
 
     const handleFocus = () => syncServerData();
     window.addEventListener('focus', handleFocus);
-    const interval = setInterval(syncServerData, 3000);
+    const interval = setInterval(syncServerData, 5000);
 
     return () => {
       window.removeEventListener('focus', handleFocus);
@@ -53,7 +59,7 @@ export function App() {
     };
   }, [syncServerData]);
 
-  // Apply dark mode class to html document element
+  // Synchronize dark mode class to html document element
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
@@ -62,6 +68,17 @@ export function App() {
     }
     saveTheme(isDark ? 'dark' : 'light');
   }, [isDark]);
+
+  const handleToggleTheme = () => {
+    const nextDark = !isDark;
+    if (nextDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    setIsDark(nextDark);
+    saveTheme(nextDark ? 'dark' : 'light');
+  };
 
   // Handle Month Navigation
   const handlePrevMonth = () => {
@@ -87,14 +104,14 @@ export function App() {
    * 1st Click on a blank/un-logged date -> Direct quick trigger for "In Office Work" (OFFICE - Light Green)
    * 2nd Click on an already set date -> Opens Leave Modal popup to configure/update leaves or reset
    */
-  const handleDateClick = async (dateStr, entry) => {
+  const handleDateClick = (dateStr, entry) => {
     if (!entry) {
       // Direct trigger for In Office Work (Light Green)
       const officeEntry = {
         type: 'full',
         category: 'OFFICE'
       };
-      await handleSaveLeave(dateStr, officeEntry);
+      handleSaveLeave(dateStr, officeEntry);
     } else {
       // 2nd click: Open Leave Modal popup to edit / configure
       setModalState({
@@ -109,26 +126,36 @@ export function App() {
     setModalState({ isOpen: false, dateStr: null, entry: null });
   };
 
-  // Save / Update Leave Allocation
-  const handleSaveLeave = async (dateStr, entryData) => {
-    const updated = {
-      ...leaves,
-      [dateStr]: entryData
-    };
-    setLeaves(updated);
-    saveLeavesData(updated);
-    await saveTursoLeave(dateStr, entryData);
-    syncServerData();
+  // Optimistic Save / Update Leave Allocation (Instant 0ms UI update)
+  const handleSaveLeave = (dateStr, entryData) => {
+    setLeaves((prevLeaves) => {
+      const updated = {
+        ...prevLeaves,
+        [dateStr]: entryData
+      };
+      saveLeavesData(updated);
+      return updated;
+    });
+
+    // Background server sync (non-blocking fire-and-forget)
+    saveTursoLeave(dateStr, entryData).catch((err) => {
+      console.error('Background Turso save error:', err);
+    });
   };
 
-  // Reset / Clear Leave Allocation for a single day
-  const handleResetDay = async (dateStr) => {
-    const updated = { ...leaves };
-    delete updated[dateStr];
-    setLeaves(updated);
-    saveLeavesData(updated);
-    await deleteTursoLeave(dateStr);
-    syncServerData();
+  // Optimistic Reset / Clear Leave Allocation for a single day (Instant 0ms UI update)
+  const handleResetDay = (dateStr) => {
+    setLeaves((prevLeaves) => {
+      const updated = { ...prevLeaves };
+      delete updated[dateStr];
+      saveLeavesData(updated);
+      return updated;
+    });
+
+    // Background server delete (non-blocking fire-and-forget)
+    deleteTursoLeave(dateStr).catch((err) => {
+      console.error('Background Turso delete error:', err);
+    });
   };
 
   // Active Month Key string for KPI computation
@@ -141,7 +168,7 @@ export function App() {
       {/* 1. Left Sidebar */}
       <Sidebar
         isDark={isDark}
-        onToggleTheme={() => setIsDark(!isDark)}
+        onToggleTheme={handleToggleTheme}
         user={user}
       />
 

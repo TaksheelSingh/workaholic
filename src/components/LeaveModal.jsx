@@ -16,14 +16,14 @@ export const LeaveModal = ({
   const [allocationMode, setAllocationMode] = useState('full'); // 'full', 'half1', 'half2'
   const [selectedCategory, setSelectedCategory] = useState('PL');
 
-  // Filter out OFFICE from dropdown list as In Office is single press trigger
-  const dropdownCategories = LEAVE_TYPE_KEYS.filter((k) => k !== 'OFFICE');
+  // All categories available in dropdown list (including In Office Work)
+  const dropdownCategories = LEAVE_TYPE_KEYS;
 
   useEffect(() => {
     if (existingEntry) {
       if (existingEntry.type === 'full') {
         setAllocationMode('full');
-        setSelectedCategory(existingEntry.category === 'OFFICE' ? 'PL' : existingEntry.category || 'PL');
+        setSelectedCategory(existingEntry.category || 'PL');
       } else if (existingEntry.type === 'half') {
         if (existingEntry.half2) {
           setAllocationMode('half2');
@@ -179,11 +179,11 @@ export const LeaveModal = ({
                 type="button"
                 onClick={handleReset}
                 title="Reset Day"
-                className="p-2.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl transition cursor-pointer flex items-center justify-center"
+                className="w-10 h-10 rounded-full text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950/60 bg-red-50 dark:bg-red-950/30 transition cursor-pointer flex items-center justify-center shadow-sm active:scale-95"
               >
                 <Trash2 className="w-5 h-5" />
               </button>
-            ) : <div />}
+            ) : <div className="w-10 h-10" />}
           </div>
 
           <div className="flex items-center space-x-3">
@@ -199,7 +199,7 @@ export const LeaveModal = ({
               type="button"
               onClick={handleSave}
               title={existingEntry ? 'Update' : 'Save'}
-              className="p-2.5 text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 rounded-xl shadow-md shadow-indigo-500/20 transition cursor-pointer flex items-center justify-center"
+              className="w-10 h-10 rounded-full text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-500/20 transition cursor-pointer flex items-center justify-center"
             >
               <Check className="w-5 h-5" />
             </button>

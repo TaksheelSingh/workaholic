@@ -244,18 +244,35 @@
     function ModalDialog({ dateStr, existing, onSave, onReset, onClose }) {
       const [mode, setMode] = React.useState('full');
       const [cat, setCat] = React.useState('PL');
+      const [half1Cat, setHalf1Cat] = React.useState('OFFICE');
+      const [half2Cat, setHalf2Cat] = React.useState('OD');
 
       React.useEffect(() => {
         if (existing) {
-          if (existing.type === 'full') { setMode('full'); setCat(existing.category || 'PL'); }
-          else { setMode(existing.half2 ? 'half2' : 'half1'); setCat(existing.half2 || existing.half1 || 'SL'); }
+          if (existing.type === 'full') {
+            setMode('full');
+            setCat(existing.category || 'PL');
+          } else if (existing.type === 'half') {
+            if (existing.half1 && existing.half2) {
+              setMode('split');
+              setHalf1Cat(existing.half1);
+              setHalf2Cat(existing.half2);
+            } else if (existing.half2) {
+              setMode('half2');
+              setCat(existing.half2);
+            } else {
+              setMode('half1');
+              setCat(existing.half1 || 'SL');
+            }
+          }
         }
       }, [existing]);
 
       const submit = () => {
         if (mode === 'full') onSave(dateStr, { type: 'full', category: cat });
         else if (mode === 'half1') onSave(dateStr, { type: 'half', half1: cat, half2: null });
-        else onSave(dateStr, { type: 'half', half1: null, half2: cat });
+        else if (mode === 'half2') onSave(dateStr, { type: 'half', half1: null, half2: cat });
+        else if (mode === 'split') onSave(dateStr, { type: 'half', half1: half1Cat, half2: half2Cat });
       };
 
       return (
@@ -269,32 +286,79 @@
             <div className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-gray-400 dark:text-gray-500 block mb-2 uppercase">1. Duration Allocation</label>
-                <div className="grid grid-cols-3 gap-2 text-xs">
-                  {['full','half1','half2'].map(m => (
-                    <button key={m} onClick={() => setMode(m)} className={`p-2.5 rounded-xl border text-center font-bold ${mode === m ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400' : 'border-gray-200 dark:border-gray-700'}`}>
-                      {m === 'full' ? 'Full Day' : m === 'half1' ? '1st Half' : '2nd Half'}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  {[
+                    { id: 'full', label: 'Full Day' },
+                    { id: 'half1', label: '1st Half' },
+                    { id: 'half2', label: '2nd Half' },
+                    { id: 'split', label: 'Dual Half' }
+                  ].map(item => (
+                    <button key={item.id} onClick={() => setMode(item.id)} className={`p-2.5 rounded-xl border text-center font-bold ${mode === item.id ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400' : 'border-gray-200 dark:border-gray-700'}`}>
+                      {item.label}
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div>
-                <label className="text-xs font-bold text-gray-400 dark:text-gray-500 block mb-2 uppercase">2. Select Leave Category</label>
-                <div className="relative">
-                  <select
-                    value={cat}
-                    onChange={e => setCat(e.target.value)}
-                    className="w-full appearance-none pl-4 pr-10 py-3 text-xs rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    {DROPDOWN_KEYS.map(k => <option key={k} value={k}>{LEAVE_TYPES[k].name} ({k})</option>)}
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
+              {mode === 'split' ? (
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-xs font-bold text-gray-400 dark:text-gray-500 block mb-1 uppercase">2A. 1st Half Category (Left Half)</label>
+                    <div className="relative">
+                      <select
+                        value={half1Cat}
+                        onChange={e => setHalf1Cat(e.target.value)}
+                        className="w-full appearance-none pl-4 pr-10 py-2.5 text-xs rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      >
+                        {DROPDOWN_KEYS.map(k => <option key={k} value={k}>{LEAVE_TYPES[k].name} ({k})</option>)}
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-bold text-gray-400 dark:text-gray-500 block mb-1 uppercase">2B. 2nd Half Category (Right Half)</label>
+                    <div className="relative">
+                      <select
+                        value={half2Cat}
+                        onChange={e => setHalf2Cat(e.target.value)}
+                        className="w-full appearance-none pl-4 pr-10 py-2.5 text-xs rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      >
+                        {DROPDOWN_KEYS.map(k => <option key={k} value={k}>{LEAVE_TYPES[k].name} ({k})</option>)}
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <label className="text-xs font-bold text-gray-400 dark:text-gray-500 block mb-2 uppercase">
+                    {mode === 'half1' ? '2. Select 1st Half Category (Left Half)' : mode === 'half2' ? '2. Select 2nd Half Category (Right Half)' : '2. Select Leave Category'}
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={cat}
+                      onChange={e => setCat(e.target.value)}
+                      className="w-full appearance-none pl-4 pr-10 py-3 text-xs rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      {DROPDOWN_KEYS.map(k => <option key={k} value={k}>{LEAVE_TYPES[k].name} ({k})</option>)}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800">

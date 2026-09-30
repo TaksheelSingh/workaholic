@@ -2,7 +2,7 @@ import { LEAVE_TYPES, LEAVE_TYPE_KEYS, getLeaveHex } from '../constants/leaveTyp
 
 export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-full">
       {LEAVE_TYPE_KEYS.map((key) => {
         const typeInfo = LEAVE_TYPES[key];
         const data = metrics[key] || { fullCount: 0, halfCount: 0, total: 0, formattedTotal: '0.0' };

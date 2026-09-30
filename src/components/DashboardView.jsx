@@ -28,10 +28,10 @@ export const DashboardView = ({
         </div>
 
         {/* Responsive Dashboard Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6 items-start">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6 items-stretch">
           
           {/* 1. Interactive Calendar Card */}
-          <div className="xl:col-span-6 w-full">
+          <div className="xl:col-span-6 w-full h-full flex flex-col justify-between">
             <CalendarCard
               year={year}
               monthIndex={monthIndex}
@@ -44,13 +44,8 @@ export const DashboardView = ({
           </div>
 
           {/* 2. KPI Metrics Grid for Categories */}
-          <div className="xl:col-span-6 w-full">
-            <div className="space-y-3">
-              <span className="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-widest block px-1 font-mono">
-                ACCUMULATED ATTENDANCE & LEAVE METRICS
-              </span>
-              <KpiMetricsGrid metrics={metrics} isDark={isDark} />
-            </div>
+          <div className="xl:col-span-6 w-full h-full flex flex-col justify-between">
+            <KpiMetricsGrid metrics={metrics} isDark={isDark} />
           </div>
 
         </div>

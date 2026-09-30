@@ -43,10 +43,17 @@ export const DashboardView = ({
 
       </div>
 
-      {/* Footer with Dashed Top Border Line */}
-      <footer className="pt-6 md:pt-8 mt-auto border-t border-dashed border-gray-200 dark:border-white/10 text-center text-xs font-medium text-gray-400 dark:text-gray-500 space-y-1">
-        <p className="font-semibold text-gray-700 dark:text-gray-300">© 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.</p>
-        <p className="text-[11px] text-gray-400/80 dark:text-gray-500/80">Made by Taksheel Rawat · Attendance & Leave Tracker</p>
+      {/* Bottom-Anchored Footer with Dashed Top Separator Line */}
+      <footer className="mt-auto pt-6 pb-4 border-t border-dashed border-gray-200 dark:border-white/10 text-center text-xs text-gray-400 dark:text-gray-500 space-y-1">
+        <p className="font-semibold text-gray-700 dark:text-gray-200">
+          © 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.
+        </p>
+        <p className="text-[11px] text-gray-500 dark:text-gray-400">
+          Made by Taksheel Rawat
+        </p>
+        <p className="text-[11px] text-gray-400 dark:text-gray-500">
+          Attendance & Leave Engine
+        </p>
       </footer>
 
     </div>

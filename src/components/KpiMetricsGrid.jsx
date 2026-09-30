@@ -13,7 +13,7 @@ export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {
           <div
             key={key}
             onClick={() => onCategoryClick && onCategoryClick(key)}
-            className="kpi-hover-card group relative bg-white dark:bg-[#0a0a0c] rounded-3xl p-4 border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-2xl hover:-translate-y-1 hover:border-gray-300 dark:hover:border-white/20 transition-all duration-250 ease-out cursor-pointer overflow-hidden space-y-2"
+            className="kpi-hover-card group relative bg-[var(--bg-card)] rounded-2xl p-3.5 border border-[var(--border-color)] shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[var(--border-hover)] transition-all duration-200 ease-out cursor-pointer overflow-hidden space-y-1.5"
           >
             {/* Category Indicator Dot & Name */}
             <div className="flex items-center space-x-2">
@@ -21,20 +21,20 @@ export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {
                 style={{ backgroundColor: hex }}
                 className="w-2.5 h-2.5 rounded-full flex-shrink-0 shadow-sm"
               />
-              <span className="text-[10px] font-black text-gray-400 dark:text-gray-400 uppercase tracking-widest truncate" title={typeInfo.name}>
-                {key} <span className="font-semibold text-gray-700 dark:text-gray-300">· {typeInfo.name}</span>
+              <span className="text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-widest truncate font-mono" title={typeInfo.name}>
+                {key} <span className="font-semibold text-[var(--text-secondary)] font-sans">· {typeInfo.name}</span>
               </span>
             </div>
 
             {/* Total Value */}
-            <div className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">
-              {data.formattedTotal} <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">DAYS</span>
+            <div className="text-xl sm:text-2xl font-black tracking-tight text-[var(--text-primary)]">
+              {data.formattedTotal} <span className="text-[10px] font-bold text-[var(--text-muted)] font-mono">DAYS</span>
             </div>
 
             {/* Sub-metrics breakdown (Full Days vs Half Days) */}
-            <div className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 flex justify-between pt-1 border-t border-gray-100 dark:border-white/10">
-              <span>Full Days: <strong className="text-gray-700 dark:text-gray-300">{data.fullCount}</strong></span>
-              <span>Half Days: <strong className="text-gray-700 dark:text-gray-300">{data.halfCount}</strong></span>
+            <div className="text-[10px] font-semibold text-[var(--text-muted)] flex justify-between pt-1 border-t border-[var(--border-color)] font-mono">
+              <span>Full: <strong className="text-[var(--text-primary)] font-sans">{data.fullCount}</strong></span>
+              <span>Half: <strong className="text-[var(--text-primary)] font-sans">{data.halfCount}</strong></span>
             </div>
           </div>
         );

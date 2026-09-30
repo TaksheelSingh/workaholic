@@ -16,25 +16,25 @@ export const CalendarCard = ({
   const todayKey = formatDateKey(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
 
   return (
-    <div className="bg-white dark:bg-[#0a0a0c] rounded-3xl border border-gray-100 dark:border-white/10 shadow-sm p-4 sm:p-6 md:p-8 space-y-6 transition-colors duration-200">
+    <div className="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] shadow-sm p-4 sm:p-5 space-y-4 transition-colors duration-200">
       
       {/* Month Navigation: Left arrow far left, Centered Month Name on top, Year below, Right arrow far right */}
-      <div className="flex items-center justify-between px-2 sm:px-4 pb-4 border-b border-gray-100 dark:border-white/10">
+      <div className="flex items-center justify-between px-1 pb-3 border-b border-[var(--border-color)]">
         <button
           type="button"
           onClick={onPrevMonth}
           title="Previous Month"
-          className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-[#161618] border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer flex-shrink-0"
+          className="w-9 h-9 rounded-xl bg-[var(--bg-card-inner)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-primary)] hover:border-[var(--border-hover)] transition cursor-pointer flex-shrink-0"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 h-4" />
         </button>
 
         {/* Middle Aligned Month & Year Header */}
         <div className="flex flex-col items-center justify-center text-center mx-auto">
-          <h2 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white tracking-tight leading-none">
+          <h2 className="text-lg sm:text-xl font-extrabold text-[var(--text-primary)] tracking-tight leading-none">
             {MONTH_NAMES[monthIndex]}
           </h2>
-          <span className="text-xs sm:text-sm font-bold text-gray-400 dark:text-gray-500 tracking-widest mt-1">
+          <span className="text-xs font-semibold text-[var(--text-muted)] tracking-widest mt-1">
             {year}
           </span>
         </div>
@@ -43,18 +43,18 @@ export const CalendarCard = ({
           type="button"
           onClick={onNextMonth}
           title="Next Month"
-          className="w-10 h-10 rounded-2xl bg-gray-50 dark:bg-[#161618] border border-gray-100 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer flex-shrink-0"
+          className="w-9 h-9 rounded-xl bg-[var(--bg-card-inner)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-primary)] hover:border-[var(--border-hover)] transition cursor-pointer flex-shrink-0"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
       {/* 7-Column Weekday Headers */}
-      <div className="grid grid-cols-7 gap-1 sm:gap-2 md:gap-3 text-center">
+      <div className="grid grid-cols-7 gap-1 text-center">
         {WEEKDAYS.map((wd) => (
           <div
             key={wd}
-            className="text-[10px] sm:text-[11px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-wider py-1"
+            className="text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-wider py-1 font-mono"
           >
             {wd}
           </div>
@@ -62,7 +62,7 @@ export const CalendarCard = ({
       </div>
 
       {/* Day Circles Grid */}
-      <div className="grid grid-cols-7 gap-1.5 sm:gap-2.5 md:gap-3 justify-items-center">
+      <div className="grid grid-cols-7 gap-1.5 sm:gap-2 justify-items-center">
         {days.map((dayObj) => {
           const entry = leaves[dayObj.dateStr];
           const isToday = dayObj.dateStr === todayKey;

@@ -13,7 +13,7 @@ export const KpiMetricsGrid = ({ metrics, isDark, onCategoryClick }) => {
           <div
             key={key}
             onClick={() => onCategoryClick && onCategoryClick(key)}
-            className="group relative bg-white dark:bg-[#0a0a0c] rounded-3xl p-4 border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 dark:hover:border-white/20 transition-all duration-200 cursor-pointer overflow-hidden space-y-2"
+            className="kpi-hover-card group relative bg-white dark:bg-[#0a0a0c] rounded-3xl p-4 border border-gray-100 dark:border-white/10 shadow-sm hover:shadow-2xl hover:-translate-y-1 hover:border-gray-300 dark:hover:border-white/20 transition-all duration-250 ease-out cursor-pointer overflow-hidden space-y-2"
           >
             {/* Category Indicator Dot & Name */}
             <div className="flex items-center space-x-2">

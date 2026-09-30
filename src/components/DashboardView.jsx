@@ -52,7 +52,7 @@ export const DashboardView = ({
           Made by Taksheel Rawat
         </p>
         <p className="text-[11px] text-gray-400 dark:text-gray-500">
-          Attendance & Leave Engine
+          Telemetry monitored by Workaholic Engine
         </p>
       </footer>
 

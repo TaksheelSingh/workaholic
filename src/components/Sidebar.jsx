@@ -60,10 +60,6 @@ export const Sidebar = ({
             </div>
           </div>
         </div>
-
-        <div className="pr-1 flex items-center gap-1 flex-shrink-0">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#30D158]" title="System Connected" />
-        </div>
       </div>
 
     </aside>

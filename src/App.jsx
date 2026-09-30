@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Sun, Moon } from 'lucide-react';
 import {
   loadLeavesData,
   saveLeavesData,
@@ -72,8 +73,9 @@ export function App() {
   }, [isDark]);
 
   const handleToggleTheme = () => {
-    const nextDark = !isDark;
     const root = document.documentElement;
+    root.classList.add('theme-transitioning');
+    const nextDark = !isDark;
     if (nextDark) {
       root.classList.add('dark');
       root.classList.remove('light');
@@ -83,6 +85,9 @@ export function App() {
     }
     setIsDark(nextDark);
     saveTheme(nextDark ? 'dark' : 'light');
+    setTimeout(() => {
+      root.classList.remove('theme-transitioning');
+    }, 100);
   };
 
   // Handle Month Navigation
@@ -170,6 +175,25 @@ export function App() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row font-sans selection:bg-[#0A84FF] selection:text-white">
       
+      {/* Mobile Top Header (Matching dabba design) */}
+      <header className="mobile-header">
+        <div className="font-extrabold text-xl tracking-tight text-[var(--text-primary)]">
+          workaholic<span className="text-[#0A84FF]">.</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-1 rounded-full bg-[var(--bg-card-inner)] text-[#0A84FF] text-xs font-bold border border-[var(--border-hover)]">
+            Dash
+          </span>
+          <button
+            onClick={handleToggleTheme}
+            className="p-1.5 rounded-xl bg-[var(--bg-card-inner)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer"
+            title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
+          >
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+          </button>
+        </div>
+      </header>
+
       {/* 1. Left Navigation Sidebar */}
       <Sidebar
         isDark={isDark}

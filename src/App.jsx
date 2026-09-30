@@ -61,20 +61,26 @@ export function App() {
 
   // Synchronize dark mode class to html document element
   useEffect(() => {
+    const root = document.documentElement;
     if (isDark) {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      root.classList.remove('light');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.add('light');
+      root.classList.remove('dark');
     }
     saveTheme(isDark ? 'dark' : 'light');
   }, [isDark]);
 
   const handleToggleTheme = () => {
     const nextDark = !isDark;
+    const root = document.documentElement;
     if (nextDark) {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      root.classList.remove('light');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.add('light');
+      root.classList.remove('dark');
     }
     setIsDark(nextDark);
     saveTheme(nextDark ? 'dark' : 'light');

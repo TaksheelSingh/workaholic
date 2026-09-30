@@ -179,7 +179,7 @@ export function App() {
         <TopBar />
 
         {/* Scrollable View Content */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 flex flex-col justify-between overflow-y-auto min-h-screen">
           <DashboardView
             year={selectedYear}
             monthIndex={selectedMonthIndex}

@@ -16,7 +16,7 @@ export const CalendarCard = ({
   const todayKey = formatDateKey(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
 
   return (
-    <div className="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] shadow-sm p-4 sm:p-5 space-y-4 transition-colors duration-200">
+    <div className="h-full flex flex-col justify-between bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] shadow-sm p-4 sm:p-5 space-y-4 transition-colors duration-200">
       
       {/* Month Navigation: Left arrow far left, Centered Month Name on top, Year below, Right arrow far right */}
       <div className="flex items-center justify-between px-1 pb-3 border-b border-[var(--border-color)]">

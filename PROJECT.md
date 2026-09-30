@@ -86,7 +86,8 @@ The dashboard adapts seamlessly across device form factors:
 | **PH** | Public Holiday | `#F97316` | Mandatory public holiday |
 | **OPH** | Optional Public Holiday | `#EAB308` | Elective religious or regional holiday |
 | **MD** | My Day | `#A855F7` | Birthday / Anniversary special leave |
-| **CO** | Compensatory Off | `#6366F1` | Earned overtime credit day |
+| **OD** | On Duty | `#EF4444` | External client site or official work |
+| **SHL** | Short Leave | `#B45309` | Short duration or partial hours leave |
 
 ### 🧮 Mathematical Calculation Formula
 

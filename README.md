@@ -14,7 +14,7 @@ Features an interactive circular-date calendar grid, zero-latency optimistic UI 
 * 📅 **Interactive Circular Calendar**: Visual circular date nodes with real-time status rendering, month/year navigation, and middle-aligned calendar headers.
 * 🎨 **Dual-Half Day Visual Splits**: Dynamic CSS linear gradients rendering 1st half ($0^\circ-180^\circ$) and 2nd half ($180^\circ-360^\circ$) leave allocations.
 * 📱 **Mobile & Desktop Responsive Grid**: Dynamic layout adaptation across Desktop ($\ge 1101\text{px}$ 3-column proportional grid), Tablet ($769\text{px}-1100\text{px}$ 2-column grid), and Mobile ($\le 768\text{px}$ single-column stack).
-* 📊 **Accumulated KPI Metrics Grid**: Real-time accumulated leave day cards for 8 attendance and leave categories:
+* 📊 **Accumulated KPI Metrics Grid**: Real-time accumulated leave day cards for 9 attendance and leave categories:
   * **OFFICE**: In Office Work (`#34D399` / Light Green)
   * **WFH**: Work From Home (`#047857` / Dark Green)
   * **PL**: Privilege Leave (`#1D4ED8` / Dark Blue)
@@ -22,7 +22,8 @@ Features an interactive circular-date calendar grid, zero-latency optimistic UI 
   * **PH**: Public Holiday (`#F97316` / Orange)
   * **OPH**: Optional Public Holiday (`#EAB308` / Yellow)
   * **MD**: My Day Birthday/Anniversary (`#A855F7` / Purple)
-  * **CO**: Compensatory Off (`#6366F1` / Indigo)
+  * **OD**: On Duty Client Site (`#EF4444` / Red)
+  * **SHL**: Short Leave (`#B45309` / Light Brown)
 * 🧮 **Mathematical Calculation Engine**: Computes exact accumulated leave metrics formatted to 1 decimal place:
   $$\text{Total}(C) = N_{\text{full}}(C) \times 1.0 + N_{\text{half}}(C) \times 0.5$$
 * 🛢️ **Turso LibSQL Live Database Sync**: Node.js/Express API server integrated with `@libsql/client` for real-time cloud SQLite persistence.

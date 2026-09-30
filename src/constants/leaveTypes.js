@@ -62,6 +62,14 @@ export const LEAVE_TYPES = {
     lightHex: '#EF4444',
     darkHex: '#F87171',
     description: 'External client site or official work'
+  },
+  SHL: {
+    key: 'SHL',
+    name: 'Short Leave',
+    accentColor: 'Light Brown',
+    lightHex: '#B45309',
+    darkHex: '#D97706',
+    description: 'Short duration or partial hours leave'
   }
 };
 

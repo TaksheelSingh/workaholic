@@ -13,45 +13,59 @@ export const DashboardView = ({
   onDateClick
 }) => {
   return (
-    <div className="p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto animate-fadeIn min-h-full flex flex-col justify-between">
+    <div className="flex-1 flex flex-col justify-between h-full space-y-6">
       
-      {/* Responsive Dashboard Grid: Desktop 2-column, Mobile single column stack */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6 items-start">
+      {/* Dynamic View Content */}
+      <div className="space-y-6">
         
-        {/* 1. Interactive Calendar Card (6 Columns Desktop, 100% Mobile) */}
-        <div className="xl:col-span-6 w-full">
-          <CalendarCard
-            year={year}
-            monthIndex={monthIndex}
-            leaves={leaves}
-            isDark={isDark}
-            onPrevMonth={onPrevMonth}
-            onNextMonth={onNextMonth}
-            onDateClick={onDateClick}
-          />
+        {/* Dashboard Title & Subtitle with Line Below (Exact GMD Specification) */}
+        <div className="mb-6 pb-4 border-b border-[var(--border-color)]">
+          <h1 className="text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
+            Dashboard
+          </h1>
+          <p className="text-sm text-[var(--text-secondary)] mt-1 font-normal">
+            Real-time leave balances, half-day allocations, and monthly attendance tracking.
+          </p>
         </div>
 
-        {/* 2. KPI Metrics Grid for Categories (6 Columns Desktop, 100% Mobile) */}
-        <div className="xl:col-span-6 w-full">
-          <div className="space-y-3">
-            <span className="text-[10px] font-black text-gray-400 dark:text-gray-400 uppercase tracking-widest block px-1">
-              ACCUMULATED ATTENDANCE & LEAVE METRICS
-            </span>
-            <KpiMetricsGrid metrics={metrics} isDark={isDark} />
+        {/* Responsive Dashboard Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 md:gap-6 items-start">
+          
+          {/* 1. Interactive Calendar Card */}
+          <div className="xl:col-span-6 w-full">
+            <CalendarCard
+              year={year}
+              monthIndex={monthIndex}
+              leaves={leaves}
+              isDark={isDark}
+              onPrevMonth={onPrevMonth}
+              onNextMonth={onNextMonth}
+              onDateClick={onDateClick}
+            />
           </div>
-        </div>
 
+          {/* 2. KPI Metrics Grid for Categories */}
+          <div className="xl:col-span-6 w-full">
+            <div className="space-y-3">
+              <span className="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-widest block px-1 font-mono">
+                ACCUMULATED ATTENDANCE & LEAVE METRICS
+              </span>
+              <KpiMetricsGrid metrics={metrics} isDark={isDark} />
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      {/* Bottom-Anchored Footer with Dashed Top Separator Line */}
-      <footer className="mt-auto pt-6 pb-4 border-t border-dashed border-gray-200 dark:border-white/10 text-center text-xs text-gray-400 dark:text-gray-500 space-y-1">
-        <p className="font-semibold text-gray-700 dark:text-gray-200">
-          © 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.
+      {/* Bottom Footer Anchored at Very Bottom with Dashed Line Directly Above (Matching GMD Reference) */}
+      <footer className="mt-auto pt-4 pb-4 border-t border-dashed border-[var(--border-color)] text-center text-xs text-[var(--text-secondary)] space-y-1">
+        <p className="font-semibold text-xs text-[var(--text-primary)]">
+          &copy; 2026 workaholic. All workdays accounted for. Zero attendance confusion, zero math headaches.
         </p>
-        <p className="text-[11px] text-gray-500 dark:text-gray-400">
+        <p className="text-[11px] text-[var(--text-muted)] font-normal">
           Made by Taksheel Rawat
         </p>
-        <p className="text-[11px] text-gray-400 dark:text-gray-500">
+        <p className="text-[11px] text-[var(--text-muted)] font-normal">
           Telemetry monitored by Workaholic Engine
         </p>
       </footer>

@@ -163,9 +163,9 @@ export function App() {
   const metrics = computeKpiMetrics(leaves, activeMonthKey);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen w-screen overflow-x-hidden bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen flex flex-col md:flex-row font-sans selection:bg-[#0A84FF] selection:text-white">
       
-      {/* 1. Left Sidebar */}
+      {/* 1. Left Navigation Sidebar */}
       <Sidebar
         isDark={isDark}
         onToggleTheme={handleToggleTheme}
@@ -173,25 +173,18 @@ export function App() {
       />
 
       {/* 2. Main Workspace */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        
-        {/* Top Header Bar */}
-        <TopBar />
-
-        {/* Scrollable View Content */}
-        <main className="flex-1 flex flex-col justify-between overflow-y-auto min-h-screen">
-          <DashboardView
-            year={selectedYear}
-            monthIndex={selectedMonthIndex}
-            leaves={leaves}
-            metrics={metrics}
-            isDark={isDark}
-            onPrevMonth={handlePrevMonth}
-            onNextMonth={handleNextMonth}
-            onDateClick={handleDateClick}
-          />
-        </main>
-      </div>
+      <main className="main-workspace">
+        <DashboardView
+          year={selectedYear}
+          monthIndex={selectedMonthIndex}
+          leaves={leaves}
+          metrics={metrics}
+          isDark={isDark}
+          onPrevMonth={handlePrevMonth}
+          onNextMonth={handleNextMonth}
+          onDateClick={handleDateClick}
+        />
+      </main>
 
       {/* 3. Leave Configuration Modal */}
       <LeaveModal

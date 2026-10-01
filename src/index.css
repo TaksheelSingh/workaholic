@@ -109,9 +109,6 @@ aside.sidebar {
     padding: 14px 12px;
     background-color: var(--bg-app);
   }
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
 }
 
 /* -------------------------------------------------------------
